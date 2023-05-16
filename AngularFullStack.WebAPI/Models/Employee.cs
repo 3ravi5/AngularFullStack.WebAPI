@@ -1,6 +1,6 @@
 ﻿namespace AngularFullStack.WebAPI.Models
 {
-    public class EmployeeDto
+    public class Employee
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
