@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 //Adding Sql server to this project
 builder.Services.AddDbContext<EmployeeDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("FullStackConnectionString")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 var app = builder.Build();
 
