@@ -36,5 +36,52 @@ namespace AngularFullStack.WebAPI.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetEmployeeByIdAsync([FromRoute]Guid id)
+        {
+            try
+            {
+                var result = await _employeeDbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+                if(result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateEmployeeByIdAsync([FromRoute] Guid id, Employee employeeRequest)
+        {
+            try {
+                var result = await _employeeDbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                    result.Name = employeeRequest.Name;
+                    result.Email = employeeRequest.Email;
+                    result.Phone = employeeRequest.Phone;
+                    result.Address = employeeRequest.Address;
+                    result.Salary = employeeRequest.Salary;
+                    result.Department = employeeRequest.Department;
+
+                //saving the updated changes to database
+                await _employeeDbContext.SaveChangesAsync();
+                return Ok(result);
+                
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
