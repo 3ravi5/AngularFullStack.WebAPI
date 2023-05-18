@@ -83,5 +83,27 @@ namespace AngularFullStack.WebAPI.Controllers
                 throw;
             }
         }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteEmployeesById([FromRoute] Guid id)
+        {
+            try
+            {
+                var result = await _employeeDbContext.Employees.FirstOrDefaultAsync(x => x.Id==id);
+                if(result == null)
+                {
+                    return NotFound();
+                }
+
+                _employeeDbContext.Employees.Remove(result);
+                await _employeeDbContext.SaveChangesAsync();
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
